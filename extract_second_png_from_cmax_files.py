@@ -25,33 +25,34 @@ def extract_second_png_from_cmax_files(folder_path, output_path):
     }
     
     saved_png_paths = {}
-    for filename in os.listdir(folder_path):
-        if filename.endswith('.cmax2'):
-            file_path = os.path.join(folder_path, filename)
-            
-            with open(file_path, 'rb') as file:
-                binary_data = file.read()
-            
-            png_positions = []
-            search_start_pos = 0
-            while True:
-                pos = binary_data.find(image_headers['PNG'], search_start_pos)
-                if pos == -1:
-                    break
-                png_positions.append(pos)
-                search_start_pos = pos + 1
-            
-            if len(png_positions) < 2:
-                saved_png_paths[filename] = 'Less than two PNG images found'
-                continue
-            
-            try:
-                image, _ = extract_image(binary_data, png_positions[1], 'PNG')
-                save_path = os.path.join(output_path, f'{filename}.png')
-                image.save(save_path)
-                saved_png_paths[filename] = save_path
-            except Exception as e:
-                saved_png_paths[filename] = str(e)
+    for root, dirs, files in os.walk(folder_path):
+        for filename in files:
+            if filename.endswith('.cmax2'):
+                file_path = os.path.join(root, filename)
+                
+                with open(file_path, 'rb') as file:
+                    binary_data = file.read()
+                
+                png_positions = []
+                search_start_pos = 0
+                while True:
+                    pos = binary_data.find(image_headers['PNG'], search_start_pos)
+                    if pos == -1:
+                        break
+                    png_positions.append(pos)
+                    search_start_pos = pos + 1
+                
+                if len(png_positions) < 2:
+                    saved_png_paths[filename] = 'Less than two PNG images found'
+                    continue
+                
+                try:
+                    image, _ = extract_image(binary_data, png_positions[1], 'PNG')
+                    save_path = os.path.join(output_path, f'{filename}.png')
+                    image.save(save_path)
+                    saved_png_paths[filename] = save_path
+                except Exception as e:
+                    saved_png_paths[filename] = str(e)
                 
     return saved_png_paths
 
