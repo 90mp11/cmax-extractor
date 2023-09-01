@@ -1,3 +1,4 @@
 /output/*
 /raw/*
+/temp/*
 /__pycache__/*
