@@ -1,62 +1,7 @@
 import os
-from PIL import Image
-import io
-import zipfile
-
-class FileHandler:
-    @staticmethod
-    def read_binary_file(file_path):
-        try:
-            with open(file_path, 'rb') as file:
-                return file.read()
-        except Exception as e:
-            return None, str(e)
-        
-    @staticmethod
-    def write_image(image, save_path):
-        try:
-            image.save(save_path)
-            return save_path
-        except Exception as e:
-            return None, str(e)
-
-    @staticmethod
-    def unzip_files(zip_file_path, temp_folder):
-        try:
-            with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
-                cmax2_files = [file for file in zip_ref.namelist() if file.lower().endswith('.cmax2')]
-                for file in cmax2_files:
-                    zip_ref.extract(file, temp_folder)
-            return True, None
-        except Exception as e:
-            return False, str(e)
-
-
-# ImageExtractor Class for image extraction logic
-class ImageExtractor:
-    @staticmethod
-    def extract_image(binary_data, start_pos, image_type):
-        if image_type == 'PNG':
-            end_pos = binary_data.find(b'\x49\x45\x4E\x44', start_pos) + 4 + 4  # IEND + CRC
-        else:
-            return None, 'Unsupported image type'
-        
-        image_data = binary_data[start_pos:end_pos]
-        image = Image.open(io.BytesIO(image_data))
-        return image, None
-
-
-# DirectoryWalker Class for directory traversal
-class DirectoryWalker:
-    @staticmethod
-    def find_eligible_files(folder_path, file_extension):
-        eligible_files = []
-        for root, _, files in os.walk(folder_path):
-            for filename in files:
-                if filename.lower().endswith(file_extension):
-                    eligible_files.append(os.path.join(root, filename))
-        return eligible_files
-
+import FIPExtractor.DirectoryWalker as DirectoryWalker
+import FIPExtractor.FileHandler as FileHandler
+import FIPExtractor.ImageExtractor as ImageExtractor
 
 # Main Coordinator Class (Refactored FIPExtractor)
 class FIPExtractor:
