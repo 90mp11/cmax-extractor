@@ -6,8 +6,5 @@ setup(
     packages=find_packages(),
     install_requires=[
         'PILLOW',
-        'zipfile',
-        'os',
-        'io'
     ],
 )
