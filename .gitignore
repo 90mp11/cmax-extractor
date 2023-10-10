@@ -30,3 +30,9 @@ share/python-wheels/
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
+
+# Program Specifics
+/FIPExtractor/raw/*
+/FIPExtractor/output/*
+/FIPExtractor/temp/*
+main.py

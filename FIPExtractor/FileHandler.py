@@ -5,7 +5,7 @@ class FileHandler:
     def read_binary_file(file_path):
         try:
             with open(file_path, 'rb') as file:
-                return file.read()
+                return file.read(), None
         except Exception as e:
             return None, str(e)
         
@@ -13,7 +13,7 @@ class FileHandler:
     def write_image(image, save_path):
         try:
             image.save(save_path)
-            return save_path
+            return save_path, None
         except Exception as e:
             return None, str(e)
 
