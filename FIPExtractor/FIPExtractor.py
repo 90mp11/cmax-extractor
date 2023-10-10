@@ -11,11 +11,21 @@ class FIPExtractor:
         temp_dir = temp_folder
 
         # Make sure the output directory exists; if not, create it
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
-
-        if not os.path.exists(temp_dir):
-            os.makedirs(temp_dir)
+        try:
+            if not os.path.exists(output_dir):
+                print(f"Creating output directory: {output_dir}")
+                os.makedirs(output_dir)
+            else:
+                print(f"Output directory {output_dir} already exists.")
+                
+            if not os.path.exists(temp_dir):
+                print(f"Creating temp directory: {temp_dir}")
+                os.makedirs(temp_dir)
+            else:
+                print(f"Temp directory {temp_dir} already exists.")
+                
+        except Exception as e:
+            print(f"An error occurred while creating the directories: {e}")
 
         self.folder_path = folder_path
         self.temp_folder = temp_dir
@@ -79,5 +89,4 @@ class FIPExtractor:
 # Test the improved class (Not executable here but for demonstration)
 if __name__ == '__main__':
     extractor = FIPExtractor()
-    extractor.extract_second_png_from_single_file("./FIPExtractor/raw/SE-2_PN20_ASN1_SP1_PT1_FIP_ASN_1.cmax2")
     extractor.extract_second_png_from_cmax_files(folder_path="./FIPExtractor/raw/")
