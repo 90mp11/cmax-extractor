@@ -31,4 +31,9 @@ share/python-wheels/
 *.manifest
 *.spec
 
+# Program Specifics
+/FIPExtractor/raw/*
+/FIPExtractor/output/*
+/FIPExtractor/temp/*
+
 main.py
