@@ -6,12 +6,9 @@ import FIPExtractor.ImageExtractor as ImageExtractor
 # Main Coordinator Class (Refactored FIPExtractor)
 class FIPExtractor:
     def __init__(self, folder_path='./raw', temp_folder='temp', output_path='output'):     
-        # Determine the directory of the script
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-
         # Define the output directory based on the script's directory
-        output_dir = os.path.join(script_dir, output_path)
-        temp_dir = os.path.join(script_dir, temp_folder)
+        output_dir = output_path
+        temp_dir = temp_folder
 
         # Make sure the output directory exists; if not, create it
         if not os.path.exists(output_dir):
